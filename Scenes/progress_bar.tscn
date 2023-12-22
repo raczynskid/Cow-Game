@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkb6v3qxsiq33"]
+
+[ext_resource type="Texture2D" uid="uid://cn8sn5sdst21c" path="res://Sprites/milk_progress_full.png" id="1_5px5r"]
+[ext_resource type="Script" path="res://Scripts/progress_bar.gd" id="1_6d5i0"]
+[ext_resource type="Texture2D" uid="uid://be4vb28je1plm" path="res://Sprites/milk_progress_empty.png" id="3_f8b8e"]
+
+[node name="ProgressBar" type="Sprite3D"]
+pixel_size = 0.0014
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture_filter = 0
+render_priority = -128
+script = ExtResource("1_6d5i0")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1612, 223)
+render_target_update_mode = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SubViewport"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+value = 50.0
+texture_under = ExtResource("3_f8b8e")
+texture_progress = ExtResource("1_5px5r")
