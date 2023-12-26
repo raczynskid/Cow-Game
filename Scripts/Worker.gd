@@ -30,8 +30,6 @@ func _process(delta):
 	#$Armature.rotation.y = lerp_angle($Armature.rotation.y, atan2(vel.x, vel.z), delta * 10)
 	
 	$NavigationAgent3D.set_velocity(vel)
-	
-	
 
 func select():
 	selection_ring.show()
@@ -57,7 +55,6 @@ func move_to(target_pos):
 
 func _on_navigation_agent_3d_target_reached():
 	change_state("idle")
-
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	set_linear_velocity(safe_velocity)

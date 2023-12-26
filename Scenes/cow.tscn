@@ -306,10 +306,11 @@ target_desired_distance = 0.5
 path_max_distance = 50.01
 avoidance_enabled = true
 height = 0.15
-radius = 0.2
-neighbor_distance = 100.0
+radius = 0.01
+neighbor_distance = 10.0
 max_neighbors = 100
 time_horizon_agents = 5.0
+max_speed = 1.0
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 
@@ -341,7 +342,7 @@ sprite_frames = SubResource("SpriteFrames_c5738")
 animation = &"move"
 
 [node name="Head" type="AnimatedSprite3D" parent="Model"]
-transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, -0.0180639, 0)
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, -0.000664764, 0)
 sorting_offset = 1.0
 billboard = 1
 double_sided = false
@@ -351,8 +352,9 @@ sprite_frames = SubResource("SpriteFrames_gqq7d")
 animation = &"move"
 frame_progress = 1.0
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+[node name="SleepIndicator" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(-0.853039, 0.521847, 1.19209e-07, -0.521847, -0.853039, 0, 2.98023e-08, -7.45058e-09, 1, -0.0914695, 0.232389, -9.31323e-10)
+visible = false
 pixel_size = 0.007
 billboard = 1
 texture_filter = 0

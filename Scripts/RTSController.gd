@@ -1,13 +1,17 @@
 extends CharacterBody3D
 
 const MOVE_MARGIN : int = 20
+@export var MAX_UNITS_SELECTED = 100
 @export var MOVE_SPEED : int = 15
 @onready var cam : Camera3D = $Camera3D
 @onready var selection_box : Node = $UnitSelector
-var m_pos := Vector2()
+@onready var navigation_mesh = $"../NavigationRegion3D"
+
 @export var units_in_circle : int = 4
 @export var mouse_scroll : bool = false
+@export var barn : PackedScene
 
+var m_pos := Vector2()
 var team : int = 0
 const ray_length : int = 1000
 var selected_units : Array = []
@@ -15,6 +19,10 @@ var old_selected_units : Array = []
 var start_sel_pos = Vector2()
 var target_positions_list : Array[Vector3] = []
 var unit_pos_index : int = 0
+
+var building_mode : bool = false
+var building_under_construction
+
 
 var fovStep = 0.1
 @export var maxFov = 90.0
@@ -49,21 +57,35 @@ func _input(event):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _process(delta):
-	if Input.is_action_just_pressed("command"):
-		move_selected_units()
+
 	m_pos = get_viewport().get_mouse_position()
 	
-	if Input.is_action_just_pressed("select"):
-		selection_box.start_pos = m_pos
-		start_sel_pos = m_pos
-	if Input.is_action_just_released("select"):
-		select_units()
-	if Input.is_action_pressed("select"):
-		selection_box.m_pos = m_pos
-		selection_box.is_visible = true
+	# process normal actions
+	if not building_mode:
+		if Input.is_action_just_pressed("command"):
+			move_selected_units()
+		if Input.is_action_just_pressed("select"):
+			selection_box.start_pos = m_pos
+			start_sel_pos = m_pos
+		if Input.is_action_just_released("select"):
+			select_units()
+		if Input.is_action_pressed("select"):
+			selection_box.m_pos = m_pos
+			selection_box.is_visible = true
+		else:
+			selection_box.is_visible = false
+			
+	# process build mode actions
 	else:
-		selection_box.is_visible = false
-		
+		if Input.is_action_just_pressed("select"):
+			building_under_construction.build()
+			disable_build_mode()
+		else:
+			if building_under_construction.under_cons:
+				var intersect = raycast_from_mouse(0b100111)
+				if intersect:
+					var build_position = intersect.position
+					building_under_construction.global_position = Vector3(build_position.x, 0, build_position.z)
 
 	camera_movement()
 	move_and_slide()
@@ -124,7 +146,6 @@ func get_unit_under_mouse():
 	var result_unit = raycast_from_mouse(0b110)
 	if result_unit:
 		var selected_unit = result_unit.collider
-		print(selected_unit)
 		return selected_unit
 
 func select_units():
@@ -175,7 +196,7 @@ func get_units_in_box(top_left, bot_right):
 	var box_selected_units = []
 	for unit in get_tree().get_nodes_in_group("units"):
 		if box.has_point(cam.unproject_position(unit.global_transform.origin)):
-			if box_selected_units.size() <= 24:
+			if box_selected_units.size() <= MAX_UNITS_SELECTED:
 				box_selected_units.append(unit)
 	return box_selected_units
 
@@ -206,3 +227,24 @@ func position_units(unit, result):
 	target_positions_list = create_units_positions_in_a_circle(result.position, len(selected_units))
 	unit.move_to(target_positions_list[unit_pos_index])
 	unit_pos_index += 1
+
+func _on_button_toggled(button_pressed):
+	if button_pressed:
+		enable_build_mode(barn)
+	else:
+		disable_build_mode()
+
+func enable_build_mode(building):
+	building_mode = true
+	var new_building = building.instantiate()
+	navigation_mesh.add_child(new_building)
+	new_building.enable_construction_mode()
+	building_under_construction = new_building
+
+func disable_build_mode():
+	building_under_construction = null
+	navigation_mesh.bake_navigation_mesh()
+	selection_box.start_pos = m_pos
+	start_sel_pos = m_pos
+	selection_box.is_visible = false
+	building_mode = false

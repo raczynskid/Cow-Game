@@ -108,7 +108,7 @@ mesh = SubResource("PlaneMesh_3ps7k")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_58r0o")
 
-[node name="barn" parent="NavigationRegion3D" groups=["buildings"] instance=ExtResource("6_7jcrh")]
+[node name="barn" parent="NavigationRegion3D" instance=ExtResource("6_7jcrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11694, 0, -0.340176)
 
 [node name="RTSController" type="CharacterBody3D" parent="."]
@@ -187,5 +187,4 @@ offset_top = 839.0
 offset_right = 1521.0
 offset_bottom = 1080.0
 
-[connection signal="pressed" from="CanvasLayer/GUIController/SelectionBarContainer/Button" to="RTSController" method="_on_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/GUIController/SelectionBarContainer/Button" to="RTSController" method="_on_button_toggled"]

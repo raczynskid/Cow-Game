@@ -187,5 +187,4 @@ offset_top = 839.0
 offset_right = 1521.0
 offset_bottom = 1080.0
 
-[connection signal="pressed" from="CanvasLayer/GUIController/SelectionBarContainer/Button" to="RTSController" method="_on_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/GUIController/SelectionBarContainer/Button" to="RTSController" method="_on_button_toggled"]
