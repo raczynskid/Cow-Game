@@ -45,5 +45,6 @@ texture = ExtResource("3_2ewo4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.353384, 0)
 
 [node name="CowSpawnTimer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="CowSpawnTimer" to="." method="_on_cow_spawn_timer_timeout"]

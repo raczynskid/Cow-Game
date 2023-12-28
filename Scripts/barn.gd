@@ -4,6 +4,7 @@ extends Node3D
 
 @onready var cow_spawn = $CowSpawnTimer
 @onready var world = get_node("/root/World")
+@onready var progress_bar = $ProgressBar
 
 enum building_types {BARN, FEEDER}
 var building_type
@@ -37,8 +38,7 @@ func deselect():
 
 func move_to(target_pos):
 	pass
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	pass
 
@@ -53,7 +53,10 @@ func spawn():
 	new_cow.move_to(unit_destination)
 
 func _on_cow_spawn_timer_timeout():
-	spawn()
+	progress_bar.add_progress(20)
+	if progress_bar.get_progress() == 100:
+		spawn()
+		progress_bar.reset()
 
 func enable_construction_mode():
 	under_cons = true

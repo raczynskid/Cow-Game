@@ -6,6 +6,7 @@ const MOVE_MARGIN : int = 20
 @onready var cam : Camera3D = $Camera3D
 @onready var selection_box : Node = $UnitSelector
 @onready var navigation_mesh = $"../NavigationRegion3D"
+@onready var barn_button = $"../CanvasLayer/GUIController/SelectionBarContainer/Button"
 
 @export var units_in_circle : int = 4
 @export var mouse_scroll : bool = false
@@ -248,3 +249,4 @@ func disable_build_mode():
 	start_sel_pos = m_pos
 	selection_box.is_visible = false
 	building_mode = false
+	barn_button.button_pressed = false
