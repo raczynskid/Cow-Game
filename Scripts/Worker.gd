@@ -7,6 +7,7 @@ var vel : Vector3
 var state_machine
 enum states {IDLE, WALKING, ATTACKING, MINING, BUILDING}
 var current_state = states.IDLE
+var building_interaction_planned = null
 @onready var animation_tree = $AnimationTree
 @onready var selection_ring = $Selection
 
@@ -54,7 +55,10 @@ func move_to(target_pos):
 	$NavigationAgent3D.set_target_position(closest_pos)
 
 func _on_navigation_agent_3d_target_reached():
-	change_state("idle")
+	if building_interaction_planned:
+		building_interaction_planned.interact_with_unit(self)
+	else:
+		change_state("idle")
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	set_linear_velocity(safe_velocity)

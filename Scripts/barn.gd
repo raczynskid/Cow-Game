@@ -5,6 +5,7 @@ extends Node3D
 @onready var cow_spawn = $CowSpawnTimer
 @onready var world = get_node("/root/World")
 @onready var progress_bar = $ProgressBar
+@onready var unit_fill_bar = $UnitFillBar
 
 enum building_types {BARN, FEEDER}
 var building_type
@@ -16,11 +17,10 @@ var units_to_spawn = []
 var under_cons = false
 
 var cost : int = 200
-var max_units : int = 4
+var max_units : int = 10
+var units_contained = []
 var current_created_units : int = 0
 var can_build = true
-
-
 
 var progress_start = 10.0
 var active = false
@@ -64,3 +64,7 @@ func enable_construction_mode():
 func build():
 	under_cons = false
 	
+func interact_with_unit(unit):
+	if len(units_contained) < max_units:
+		units_contained.append(unit)
+		unit_fill_bar.increase_unit_count()

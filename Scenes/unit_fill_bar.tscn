@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://45s7ggjxh2au"]
+
+[ext_resource type="Script" path="res://Scenes/unit_fill_bar.gd" id="1_an1n6"]
+[ext_resource type="Texture2D" uid="uid://yr7wn4yxnbu3" path="res://Sprites/Cow_head.png" id="2_bfccr"]
+
+[node name="UnitFillBar" type="Sprite3D"]
+pixel_size = 0.0014
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture_filter = 0
+render_priority = -128
+script = ExtResource("1_an1n6")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="UnitIcon1" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0774164, 0)
+visible = false
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon2" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0774164, 0)
+visible = false
+offset = Vector2(-20, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon3" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0774164, 0)
+visible = false
+offset = Vector2(20, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon4" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0774164, 0)
+visible = false
+offset = Vector2(-40, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon5" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0774164, 0)
+visible = false
+offset = Vector2(40, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon6" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02914, 0)
+visible = false
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon7" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02914, 0)
+visible = false
+offset = Vector2(-20, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon8" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02914, 0)
+visible = false
+offset = Vector2(20, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon9" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02914, 0)
+visible = false
+offset = Vector2(-40, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")
+
+[node name="UnitIcon10" type="Sprite3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02914, 0)
+visible = false
+offset = Vector2(40, 0)
+pixel_size = 0.005
+texture_filter = 0
+texture = ExtResource("2_bfccr")

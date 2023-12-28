@@ -21,6 +21,7 @@ var start_sel_pos = Vector2()
 var target_positions_list : Array[Vector3] = []
 var unit_pos_index : int = 0
 
+
 var building_mode : bool = false
 var building_under_construction
 
@@ -175,13 +176,31 @@ func clean_current_units_and_apply_new(new_units):
 		unit.select()
 
 func move_selected_units():
+	# check if the target is an interactable object
+	var interaction_unit = raycast_from_mouse(0b110)
+	
+	# check position of the target point on surface
 	var result = raycast_from_mouse(0b100111)
 	unit_pos_index = 0
 	if selected_units.size() != 0:
 		var first_unit = selected_units[0]
+		# position units if target located on surface
 		if result.collider.is_in_group("surface"):
 			for unit in selected_units:
 				position_units(unit, result)
+		# if target is an interactable object, move towards and trigger
+		# interaction on arrival
+		if interaction_unit:
+			for unit in selected_units:
+				if not unit.is_in_group("Buildings"):
+					position_units(unit, result)
+					set_interaction(unit, interaction_unit.collider)
+
+
+func set_interaction(unit, collider):
+	# if interaction target is a building, set as interactable at unit level
+	if collider.is_in_group("Buildings"):
+		unit.building_interaction_planned = collider
 
 func get_units_in_box(top_left, bot_right):
 	if top_left.x > bot_right.x:
