@@ -188,6 +188,8 @@ func move_selected_units():
 		if result.collider.is_in_group("surface"):
 			for unit in selected_units:
 				position_units(unit, result)
+				unit.building_interaction_planned = null
+				unit.unit_interaction_planned = null
 		# if target is an interactable object, move towards and trigger
 		# interaction on arrival
 		if interaction_unit:
@@ -201,6 +203,8 @@ func set_interaction(unit, collider):
 	# if interaction target is a building, set as interactable at unit level
 	if collider.is_in_group("Buildings"):
 		unit.building_interaction_planned = collider
+	elif collider.is_in_group("units"):
+		unit.unit_interaction_planned = collider
 
 func get_units_in_box(top_left, bot_right):
 	if top_left.x > bot_right.x:

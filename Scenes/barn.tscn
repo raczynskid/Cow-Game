@@ -46,7 +46,6 @@ texture = ExtResource("3_2ewo4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.353384, 0)
 
 [node name="CowSpawnTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="UnitFillBar" parent="." instance=ExtResource("6_hs553")]
 transform = Transform3D(1, 0, 0, 0, 0.718903, 0.69511, 0, -0.69511, 0.718903, 0.0458098, 0.410726, 0.147974)

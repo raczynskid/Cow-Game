@@ -65,6 +65,18 @@ func build():
 	under_cons = false
 	
 func interact_with_unit(unit):
-	if len(units_contained) < max_units:
-		units_contained.append(unit)
-		unit_fill_bar.increase_unit_count()
+	if unit.is_in_group("farmer"):
+		var farmer_milk = unit.progress_bar.get_progress()
+		var barn_milk = progress_bar.get_progress()
+		var surplus = (farmer_milk + barn_milk) - 100
+		progress_bar.add_progress(unit.progress_bar.get_progress())
+		unit.progress_bar.reset()
+		if progress_bar.get_progress() >= 100:
+			spawn()
+			progress_bar.reset()
+			if surplus > 0:
+				progress_bar.add_progress(surplus)
+	else:	
+		if len(units_contained) < max_units:
+			units_contained.append(unit)
+			unit_fill_bar.increase_unit_count()

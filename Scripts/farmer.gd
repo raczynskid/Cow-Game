@@ -5,7 +5,7 @@ extends RigidBody3D
 var speed : float
 var vel : Vector3
 var state_machine
-enum states {IDLE, WALKING}
+enum states {IDLE, WALKING, ATTACKING, MILKING, BUILDING}
 var current_state = states.IDLE
 var building_interaction_planned = null
 var unit_interaction_planned = null
@@ -13,6 +13,7 @@ var unit_interaction_planned = null
 @onready var selection_ring = $Selection
 
 var team : int = 0
+@onready var progress_bar = $ProgressBar
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,10 +46,21 @@ func change_state(state):
 			current_state = states.IDLE
 			speed = 0.000001
 			state_machine.travel("Idle")
+			if progress_bar.get_progress() == 0:
+				progress_bar.visible = false
+			$MilkTimer.stop()
 		"walking":
 			current_state = states.WALKING
 			state_machine.travel("Walk")
 			speed = WALK_SPEED
+			if progress_bar.get_progress() == 0:
+				progress_bar.visible = false
+			$MilkTimer.stop()
+		"milking":
+			current_state = states.MILKING
+			progress_bar.visible = true
+			$MilkTimer.start()
+			
 
 func move_to(target_pos):
 	change_state("walking")
@@ -58,12 +70,19 @@ func move_to(target_pos):
 func _on_navigation_agent_3d_target_reached():
 	if building_interaction_planned:
 		building_interaction_planned.interact_with_unit(self)
+	if unit_interaction_planned && !(unit_interaction_planned.is_in_group("farmer")):
+		unit_interaction_planned.interact_with_unit(self)
+		change_state("milking")
+		
 	else:
 		change_state("idle")
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	set_linear_velocity(safe_velocity)
+
+
+func _on_milk_timer_timeout():
+	progress_bar.add_progress(1)
 	
 func interact_with_unit(unit):
-	#TODO: add milk depletion and recovery mechanics
 	pass

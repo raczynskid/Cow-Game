@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://deqtn2je7pcsl"]
+[gd_scene load_steps=22 format=3 uid="uid://deqtn2je7pcsl"]
 
-[ext_resource type="Script" path="res://Scripts/Worker.gd" id="1_s6pcl"]
+[ext_resource type="Script" path="res://Scripts/farmer.gd" id="1_c0e7w"]
 [ext_resource type="Texture2D" uid="uid://b0wadiencc5d5" path="res://Sprites/Cow-Farmer.png" id="2_sj2t4"]
 [ext_resource type="Texture2D" uid="uid://cbgx5hls2oaxg" path="res://Sprites/Selection.png" id="3_xeeo0"]
+[ext_resource type="PackedScene" uid="uid://bkb6v3qxsiq33" path="res://Scenes/progress_bar.tscn" id="4_8pqcf"]
 
 [sub_resource type="Animation" id="Animation_pw1tr"]
 resource_name = "Idle"
@@ -151,10 +152,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="farmer" type="RigidBody3D" groups=["units"]]
+[node name="farmer" type="RigidBody3D" groups=["farmer", "units"]]
 collision_layer = 2
 lock_rotation = true
-script = ExtResource("1_s6pcl")
+script = ExtResource("1_c0e7w")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.3
@@ -194,6 +195,7 @@ texture_filter = 0
 render_priority = 11
 sprite_frames = SubResource("SpriteFrames_ikfii")
 animation = &"Idle"
+frame = 1
 
 [node name="Selection" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.68754e-14, -0.151609, 0.0181954)
@@ -203,5 +205,12 @@ texture_filter = 0
 render_priority = 10
 texture = ExtResource("3_xeeo0")
 
+[node name="ProgressBar" parent="." instance=ExtResource("4_8pqcf")]
+visible = false
+
+[node name="MilkTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="timeout" from="MilkTimer" to="." method="_on_milk_timer_timeout"]
